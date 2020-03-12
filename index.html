@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html style='background-color: black'>
+    <head>
+        <title>Qwasar Quest - Bouncing Box</title>
+        <style>
+            body{
+                width: 100vw;
+                height:100vh;
+                margin:0;
+                position:relative;
+            }
+            #my_bouncing_box{
+                background-color: blue;
+                border-radius: 3px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                min-width: 100px;
+                border-radius: 50%;
+                min-height: 100px;
+                text-align: center;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #FFF;
+                background :radial-gradient(circle at 33px 33px, #785667, #000);
+            }
+        </style>
+    </head>
+    <body >
+        <div id="my_bouncing_box">
+            sherif_a
+        </div>
+    </body>
+    <script type="text/javascript">
+        const body = document.body
+        const bouncing_box = document.getElementById('my_bouncing_box')
+        let isbouncing_boxTop = true, isbouncing_boxBottom = false, isbouncing_boxRight = false, isbouncing_boxLeft = true;
+        let cordY = 0, cordX = 0;
+
+        function movingBouncing_Box(){
+            
+            if (isbouncing_boxTop == true) {
+                cordY += 1;
+                bouncing_box.style.top = `${cordY}px`;
+            } else if (isbouncing_boxBottom == true) {
+                cordY -= 1;
+                bouncing_box.style.top = `${cordY}px`;
+            }
+
+            if (isbouncing_boxLeft == true) {
+                cordX += 1;
+                bouncing_box.style.left = `${cordX}px`;
+            } else if (isbouncing_boxRight == true) {
+                cordX -= 1;
+                bouncing_box.style.left = `${cordX}px`;
+            }
+            bouncing_boxPosition()
+        }
+
+        function changeColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            bouncing_box.style.background = `radial-gradient(circle at 33px 33px, ${color}, #000)`;
+        }
+
+        //function get the current position of the bouncingg box (left right, top, bottom)
+        function bouncing_boxPosition(){
+            const { top:bodyTop, right:bodyRight, bottom:bodyBottom, left:bodyLeft } = body.getBoundingClientRect();
+            const { top:bouncing_boxTop, right:bouncing_boxRight, bottom:bouncing_boxBottom, left:bouncing_boxLeft } = bouncing_box.getBoundingClientRect();
+            if (bodyBottom == bouncing_boxBottom) {
+                isbouncing_boxBottom = true;
+                isbouncing_boxTop = false;
+                changeColor()
+            } else if (bodyTop == bouncing_boxTop) {
+                isbouncing_boxTop = true;
+                isbouncing_boxBottom = false;
+                changeColor()
+            }
+            
+            if (bodyRight == bouncing_boxRight) {
+                isbouncing_boxLeft = false;
+                isbouncing_boxRight = true;
+                changeColor()
+            } else if (bodyLeft == bouncing_boxLeft) {
+                isbouncing_boxRight = false;
+                isbouncing_boxLeft = true;
+                changeColor()
+            }
+        }
+        var interval = setInterval(movingBouncintoucg_Box, 3);
+    </script>
+</html>
